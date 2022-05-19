@@ -8,6 +8,12 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
 
+    <!-- sweet alert -->
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+
+
     <title>Onoff system</title>
 </head>
 <style>
@@ -19,7 +25,7 @@
 }
 
 body {
-    font-style: normal ;
+    font-style: normal;
     font-weight: bold;
 }
 
@@ -59,45 +65,54 @@ body {
     background-color: gray;
     color: white !important;
 }
-.text-dark{
+
+.text-dark {
     color: #0D5C75 !important;
 }
-.list-group-item.active{
+
+.list-group-item.active {
     background-color: #EEB14F;
     color: white !important;
 }
-.list-group{
+
+.list-group {
     border-bottom: 1px solid white !important;
 }
-.app-btn{
-    background:#263547;
-    color:#EEB14F;
-    border-color :#263547 !important;
-}
-.app-btn:hover{
-    background:#EEB14F;
-    color: #263547 !important;
-}
-.btn{
-    border : none !important;
-}
-.app-btn-success{
-    background:#263547;
-    color:#EEB14F;
-    border-color :#263547 !important;
-}
-.app-btn-success:hover{
-    background:#EEB14F;
-    color: #263547 !important;
-}
-.app-btn-danger{
-    background:#263547;
-    color:#EEB14F;
-    border-color :#263547 !important;
-}
-.app-btn-danger:hover{
-    background:red;
-    color:white !important;
+
+.app-btn {
+    background: #263547;
+    color: #EEB14F;
+    border-color: #263547 !important;
 }
 
+.app-btn:hover {
+    background: #EEB14F;
+    color: #263547 !important;
+}
+
+.btn {
+    border: none !important;
+}
+
+.app-btn-success {
+    background: #263547;
+    color: #EEB14F;
+    border-color: #263547 !important;
+}
+
+.app-btn-success:hover {
+    background: #EEB14F;
+    color: #263547 !important;
+}
+
+.app-btn-danger {
+    background: #263547;
+    color: #EEB14F;
+    border-color: #263547 !important;
+}
+
+.app-btn-danger:hover {
+    background: red;
+    color: white !important;
+}
 </style>

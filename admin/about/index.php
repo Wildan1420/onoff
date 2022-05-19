@@ -61,12 +61,12 @@ if(isset($_POST) && !empty($_POST)){
                     </div>
                     <div class="mb-3 col-lg-6">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email" placeholder="Abcd@general.com"
+                        <input type="email" class="form-control" name="email" placeholder="ABC@general.com"
                             value="<?=$result['email']?>" autocomplete="off" required>
                     </div>
                     <div class="mb-3 col-lg-6">
                         <label class="form-label">Phone</label>
-                        <input type="text" class="form-control" name="phone" placeholder="0123456789"
+                        <input type="text" class="form-control" name="phone" placeholder="064xxxxxxx"
                             value="<?=$result['phone']?>" autocomplete="off" required>
                     </div>
                     <button type="submit" class="btn app-btn-primary">Save Changes</button>

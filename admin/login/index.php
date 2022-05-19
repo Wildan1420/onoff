@@ -1,4 +1,5 @@
 <?php
+include ('includes/head.php');
 if(isset($_POST) && !empty($_POST)){
 	// echo '<pre>' ;
 	// print_r($_POST);
@@ -13,13 +14,26 @@ if(isset($_POST) && !empty($_POST)){
 	// echo ($row);
 	if($row > 0){
 		$result = mysqli_fetch_assoc($query);
+       
 		$_SESSION['username_login']= $result['username'];
 		$_SESSION['image_login']= $result['image'];
-		$alert= '<script type="text/javascript">';
-        $alert .= 'alert("Login successfully");';
-        $alert .= 'window.location.href = "";';
-        $alert .= '</script>';
-        echo $alert;
+        $_SESSION['id_login']= $result['id'];
+        $id = $result['id'];
+        if($result['id'] >= 0){
+            $sql = "UPDATE `tb_admin` SET `status`= '1' WHERE `id` = ".$id;
+            mysqli_query($conn,$sql);
+        }
+        echo '<script>
+            setTimeout(function() {
+             swal({
+                 title: "Login success!",
+                 text: "Welcome to my onoff system",
+                 type: "success"
+             }, function() {
+                window.location.href = "";
+             });
+                    }, 1000);
+                </script>';
         exit();
 	}else{
 		$alert= '<script type="text/javascript">';

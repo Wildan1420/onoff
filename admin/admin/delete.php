@@ -5,12 +5,18 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
     
     if (mysqli_query($conn,$sql)) {
         //echo "created successfully";
-        $alert= '<script type="text/javascript">';
-        $alert .= 'alert("DELETE Successfully");';
-        $alert .= 'window.location.href = "?page=admin";';
-        $alert .= '</script>';
-        echo $alert;
-        exit();
+        echo '<script>
+                setTimeout(function() {
+                swal({
+                    title: "ลบบัญชีผู้ดูเเลระบบนี้เรียบร้อย",
+                    type: "success",
+                    button: "OK",
+                }, function() {
+                    window.location.href = "?page=admin";
+                });
+                        }, 1000);
+            </script>';
+    exit();
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }

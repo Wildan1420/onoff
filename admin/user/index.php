@@ -2,20 +2,17 @@
  
 	$sql = "SELECT * FROM tb_user";
 	$query = mysqli_query($conn,$sql);
+   
 ?>
-<? 
-    $s = $row_tb_user['status'];
-    {
-        if ($s == 0) $t = "on";
-        if ($s == 1) $t = "off";
-    }
-?>
+
+
+
 <div class="row justify-content-between">
     <div class="col-auto">
         <h1 class="app-page-title mb-0">ตารางข้อมูลสมาชิก</h1>
     </div>
     <div class="col-auto">
-        
+
     </div>
 </div>
 <hr class="mb-4">
@@ -42,18 +39,16 @@
                             <td class="align-middle"><?=$data['firstname'].' '.$data['lastname'] ?></td>
                             <td class="align-middle"><?=$data['email'] ?></td>
                             <td class="align-middle"><?=$data['phone'] ?></td>
-                            <td class="align-middle"><?=($data['status'] ?><?php echo $t; ?>
-                            //  ? ' <span class="text-success"> เปิดใช้งาน </span>' : 
-							// 	' <span class="text-danger"> ปิดใช้งาน </span>') ?>
-                        </td>
+                            <td class="align-middle"><?=($data['status'] ? ' <span class="text-success"> เปิดใช้งาน </span>' :
+                                ' <span class="text-danger"> ปิดใช้งาน </span>')?>
+                            </td>
                             <td class="align-middle">
                                 <a href="?page=<?=$_GET['page']?>&function=update&id=<?=
                                 $data['id']?>" class="btn btn-sm btn-warning">เเก้ไข</a>
                                 <a href="?page=<?=$_GET['page']?>&function=resetpassword&id=<?=
                                 $data['id']?>" class="btn btn-sm btn-secondary">reset password</a>
                                 <a href="?page=<?=$_GET['page']?>&function=delete&id=<?=
-                                $data['id']?>" onclick="return confirm('You DELETE Username : <?=$data['username']?> ensure!')" 
-                                class="btn btn-sm btn-danger">ลบ</a>
+                                $data['id']?>" class="btn btn-sm btn-danger delete">ลบ</a>
                             </td>
                         </tr>
                         <?php endforeach;?>
@@ -95,6 +90,29 @@ $(document).ready(function() {
             }
         }
     });
+});
+$(document).ready(function() {
+    $('.delete').click(function(e) {
+        e.preventDefault();
+        var id = $(this).val();
+        swal({
+                title: "Are you sure delete Username : <?=$data['username']?>",
+                text: "Once deleted, you will not be able to recover!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal("Poof! Your imaginary file has been deleted!", {
+                        icon: "success",
+                    });
+                } else {
+                    swal("Your imaginary file is safe!");
+                }
+            });
+    });
+
 });
 </script>
 <?php 

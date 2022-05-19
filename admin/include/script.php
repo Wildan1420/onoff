@@ -18,3 +18,4 @@ crossorigin="anonymous"></script>
 
 <!--data table JS-->
 <script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>

@@ -67,11 +67,17 @@ if(isset($_POST) && !empty($_POST)){
     // echo $sql;
     if (mysqli_query($conn,$sql)) {
         //echo "created successfully";
-        $alert= '<script type="text/javascript">';
-        $alert .= 'alert("Edited successfully");';
-        $alert .= 'window.location.href = "?page=user&function=update&id='.$id.'";';
-        $alert .= '</script>';
-        echo $alert;
+        echo '<script>
+            setTimeout(function() {
+            swal({
+                title: "เเก้ไขข้อมูลสำเร็จ",
+                type: "success",
+                button: "OK",
+            }, function() {
+                window.location.href = "?page=user&function=update&id='.$id.'";
+            });
+                    }, 1000);
+            </script>';
         exit();
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;

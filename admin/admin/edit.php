@@ -29,33 +29,51 @@ if(isset($_POST) && !empty($_POST)){
                 if(move_uploaded_file($filetmp,$target.$filename)){
                     $filename = $filename;
                 }else{
-                    $alert= '<script type="text/javascript">';
-                    $alert .= 'alert("เพิ่มไฟล์เข้า folder ไม่สำเร็จ");';
-                    $alert .= 'window.location.href = "?page=admin&function=add";';
-                    $alert .= '</script>';
-                    echo $alert;
-                    exit();
+                    echo '<script>
+                            setTimeout(function() {
+                            swal({
+                                title: "เพิ่มไฟล์เข้า folder ไม่สำเร็จ",
+                                type: "success",
+                                button: "OK",
+                            }, function() {
+                                window.location.href = "?page=admin&function=add";
+                            });
+                                    }, 1000);
+                        </script>';
+                exit();
                 }
             }else{
                 $newfilename = time().$filename;
                 if(move_uploaded_file($filetmp,$target.$newfilename)){
                     $filename = $newfilename;
                 }else{
-                    $alert= '<script type="text/javascript">';
-                    $alert .= 'alert("เพิ่มไฟล์เข้า folder ไม่สำเร็จ");';
-                    $alert .= 'window.location.href = "?page=admin&function=add";';
-                    $alert .= '</script>';
-                    echo $alert;
-                    exit();
+                    echo '<script>
+                            setTimeout(function() {
+                            swal({
+                                title: "เพิ่มไฟล์เข้า folder ไม่สำเร็จ",
+                                type: "success",
+                                button: "OK",
+                            }, function() {
+                                window.location.href = "?page=admin&function=add";
+                            });
+                                    }, 1000);
+                        </script>';
+                exit();
                 }
             }
         }else{
-            $alert= '<script type="text/javascript">';
-            $alert .= 'alert("ประเภทไฟล์ไม่ถูกต้อง");';
-            $alert .= 'window.location.href = "?page=admin&function=add";';
-            $alert .= '</script>';
-            echo $alert;
-            exit();
+            echo '<script>
+                            setTimeout(function() {
+                            swal({
+                                title: "ประเภทไฟล์ไม่ถูกต้อง",
+                                type: "error",
+                                button: "OK",
+                            }, function() {
+                                window.location.href = "?page=admin&function=add";
+                            });
+                                    }, 1000);
+                        </script>';
+                exit();
         }
 
     }else{
@@ -67,12 +85,18 @@ if(isset($_POST) && !empty($_POST)){
     ,image = '$filename' WHERE id = '$id'";
     if (mysqli_query($conn,$sql)) {
         //echo "created successfully";
-        $alert= '<script type="text/javascript">';
-        $alert .= 'alert("Edited successfully");';
-        $alert .= 'window.location.href = "?page=admin";';
-        $alert .= '</script>';
-        echo $alert;
-        exit();
+        echo '<script>
+                            setTimeout(function() {
+                            swal({
+                                title: "เเก้ไขข้อมูลสำเร็จ",
+                                type: "success",
+                                button: "OK",
+                            }, function() {
+                                window.location.href = "?page=admin";
+                            });
+                                    }, 1000);
+                        </script>';
+                exit();
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }

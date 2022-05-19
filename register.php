@@ -1,55 +1,108 @@
 <?php 
     include ('connection/server.php');
+    include ('includes/head.php');
     if(isset($_POST) && !empty($_POST)){
         // echo '<pre>';
         // print_r($_POST);
         // echo '</pre>';
         // exit ();
-
-        if(isset($_POST['password']) && !empty($_POST['password']) && isset($_POST['repassword']) && 
-            !empty($_POST['repassword'])){
-            $password = $_POST['password'];
-            $repassword =  $_POST['repassword'];
-            if($password != $repassword){
-                echo '<script>';
-                echo 'alert("password and confirm password not match");';
-                echo 'window.location.href = "register.php"';
-                echo '</script>';
-                exit();
-            }
-            $password = md5($password);
-        }else{
-            echo '<script>';
-            echo 'alert("Please write your password");';
-            echo 'window.location.href = "register.php"';
-            echo '</script>';
-            exit();
-        }
-
         $username = $_POST['username'];
-        $password = $_POST['password'];
+        $password = sha1(md5($_POST['password']));
         $firstname = $_POST['firstname'];
         $lastname = $_POST['lastname'];
-        $phone = $_POST['phone'];
         $email = $_POST['email'];
-        $sql = sprintf("INSERT INTO tb_user (username,password,firstname,lastname,phone,email) VALUE 
-        ('%s','%s','%s','%s','%s','%s')",$username,$password,$firstname,$lastname,$phone,$email);
-        $query = mysqli_query($conn,$sql);
-        if($query){
-            echo '<script>';
-                echo 'alert("Sign up is successs");';
-                echo 'window.location.href = "login.php"';
-                echo '</script>';
+        $phone = $_POST['phone'];
+
+        $sql_check = "SELECT * FROM tb_user WHERE username = '$username'";
+        $query_check = mysqli_query($conn,$sql_check);
+        $row_check = mysqli_num_rows($query_check);
+            if($row_check > 0 ) {
+                echo '<script>
+                setTimeout(function() {
+                swal({
+                    title: "มีผู้ใช้งานนี้อยู่เเล้ว",
+                    type: "error",
+                    button: "OK",
+                }, function() {
+                    window.location.href = "register.php";
+                });
+                        }, 1000);
+                </script>';
                 exit();
-        }else{
-            echo '<script>';
-            echo 'alert("sign up is not success");';
-            echo 'window.location.href = "register.php"';
-            echo '</script>';
-            exit();
-        }
-        // echo $sql;
-        // exit();
+            }else{
+                if(isset($_POST['password']) && !empty($_POST['password']) && isset($_POST['repassword']) && 
+                !empty($_POST['repassword'])){
+                $password = sha1(md5($_POST['password']));
+                $repassword =  sha1(md5($_POST['repassword']));
+                if($password != $repassword){
+                    echo '<script>
+                    setTimeout(function() {
+                    swal({
+                        title: "password and confirm password not match",
+                        type: "error",
+                        button: "OK",
+                    }, function() {
+                        window.location.href = "register.php";
+                    });
+                            }, 1000);
+                    </script>';
+                    exit();
+                }
+                $password = md5($password);
+                }else{
+                    echo '<script>
+                    setTimeout(function() {
+                    swal({
+                        title: "Please write your password",
+                        type: "error",
+                        button: "OK",
+                    }, function() {
+                        window.location.href = "register.php";
+                    });
+                            }, 1000);
+                    </script>';
+                    exit();
+                }   
+    
+                $sql = sprintf("INSERT INTO tb_user (username,password,firstname,lastname,phone,email) VALUE 
+                ('%s','%s','%s','%s','%s','%s')",$username,$password,$firstname,$lastname,$phone,$email);
+                $query = mysqli_query($conn,$sql);
+                if($query){
+                    echo '<script>
+                    setTimeout(function() {
+                    swal({
+                        title: "Sign up is successs",
+                        type: "success",
+                        button: "OK",
+                    }, function() {
+                        window.location.href = "login.php";
+                    });
+                            }, 1000);
+                    </script>';
+                    exit();
+                }else{
+                    echo '<script>';
+                    echo 'alert("sign up is not success");';
+                    echo 'window.location.href = "register.php"';
+                    echo '</script>';
+                    exit();
+                    echo '<script>
+                    setTimeout(function() {
+                    swal({
+                        title: "sign up is not success",
+                        type: "error",
+                        button: "OK",
+                    }, function() {
+                        window.location.href = "register.php";
+                    });
+                            }, 1000);
+                    </script>';
+                    exit();
+                }
+            // echo $sql;
+            // exit();
+            }
+        
     }
 
 ?>
@@ -126,12 +179,12 @@
                                     </div>
                                     <div class="mb-3">
                                         <!-- <label  class="form-label">Password <span class="text-danger">*</span></label> -->
-                                        <input type="text" class="form-control" name="password" placeholder="password"
-                                            autocomplete="off" required>
+                                        <input type="password" class="form-control" name="password"
+                                            placeholder="password" autocomplete="off" required>
                                     </div>
                                     <div class="mb-3">
                                         <!-- <label  class="form-label">Re-password <span class="text-danger">*</span></label> -->
-                                        <input type="text" class="form-control" name="repassword"
+                                        <input type="password" class="form-control" name="repassword"
                                             placeholder="re-password" autocomplete="off" required>
                                     </div>
 

@@ -18,11 +18,17 @@ if(isset($_POST) && !empty($_POST)){
         $query_check = mysqli_query($conn,$sql_check);
         $row_check = mysqli_num_rows($query_check);
             if($row_check > 0 ) {
-                $alert= '<script type="text/javascript">';
-                $alert .= 'alert("มีผู้ใช้งานนี้อยู่เเล้ว");';
-                $alert .= 'window.location.href = "?page=admin&function=add";';
-                $alert .= '</script>';
-                echo $alert;
+                echo '<script>
+                setTimeout(function() {
+                swal({
+                    title: "มีผู้ใช้งานนี้อยู่เเล้ว",
+                    type: "error",
+                    button: "OK",
+                }, function() {
+                    window.location.href = "?page=admin&function=add";
+                });
+                        }, 1000);
+                </script>';
                 exit();
             }else{
                 if(isset($_FILES['image']['name']) && !empty($_FILES['image']
@@ -37,32 +43,50 @@ if(isset($_POST) && !empty($_POST)){
                 if(move_uploaded_file($filetmp,$target.$filename)){
                     $filename = $filename;
                 }else{
-                    $alert= '<script type="text/javascript">';
-                    $alert .= 'alert("เพิ่มไฟล์เข้า folder ไม่สำเร็จ");';
-                    $alert .= 'window.location.href = "?page=admin&function=add";';
-                    $alert .= '</script>';
-                    echo $alert;
-                    exit();
+                    echo '<script>
+                    setTimeout(function() {
+                    swal({
+                        title: "เพิ่มไฟล์เข้า folder ไม่สำเร็จ",
+                        type: "error",
+                        button: "OK",
+                    }, function() {
+                        window.location.href = "?page=user&function=add";
+                    });
+                            }, 1000);
+                    </script>';
+                exit();
                 }
             }else{
                 $newfilename = time().$filename;
                 if(move_uploaded_file($filetmp,$target.$newfilename)){
                     $filename = $newfilename;
                 }else{
-                    $alert= '<script type="text/javascript">';
-                    $alert .= 'alert("เพิ่มไฟล์เข้า folder ไม่สำเร็จ");';
-                    $alert .= 'window.location.href = "?page=admin&function=add";';
-                    $alert .= '</script>';
-                    echo $alert;
-                    exit();
+                    echo '<script>
+                    setTimeout(function() {
+                    swal({
+                        title: "เพิ่มไฟล์เข้า folder ไม่สำเร็จ",
+                        type: "error",
+                        button: "OK",
+                    }, function() {
+                        window.location.href = "?page=user&function=add";
+                    });
+                            }, 1000);
+                    </script>';
+                exit();
                 }
             }
         }else{
-            $alert= '<script type="text/javascript">';
-            $alert .= 'alert("ประเภทไฟล์ไม่ถูกต้อง");';
-            $alert .= 'window.location.href = "?page=admin&function=add";';
-            $alert .= '</script>';
-            echo $alert;
+            echo '<script>
+                setTimeout(function() {
+                swal({
+                    title: "ประเภทไฟล์ไม่ถูกต้อง",
+                    type: "error",
+                    button: "OK",
+                }, function() {
+                    window.location.href = "?page=user&function=add";
+                });
+                        }, 1000);
+                </script>';
             exit();
         }
 
@@ -78,12 +102,18 @@ if(isset($_POST) && !empty($_POST)){
     
     if (mysqli_query($conn,$sql)) {
         //echo "created successfully";
-        $alert= '<script type="text/javascript">';
-        $alert .= 'alert("Created successfully");';
-        $alert .= 'window.location.href = "?page=admin";';
-        $alert .= '</script>';
-        echo $alert;
-        exit();
+        echo '<script>
+            setTimeout(function() {
+            swal({
+                title: "เพิ่มผู้ใช้งานไหม่สำเร็จ",
+                type: "success",
+                button: "OK",
+            }, function() {
+                window.location.href = "?page=user";
+            });
+                    }, 1000);
+            </script>';
+            exit();
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
@@ -104,84 +134,91 @@ if(isset($_POST) && !empty($_POST)){
         <a href="?page=<?=$_GET['page']?>" class="btn app-btn-secondary">ย้อนกลับ</a>
     </div>
 
-<hr class="mb-4">
-<div class="row g-4 settings-section">
-    <div class="col-12 col-md-12">
-        <div class="app-card app-card-settings shadow-sm p-4">
+    <hr class="mb-4">
+    <div class="row g-4 settings-section">
+        <div class="col-12 col-md-12">
+            <div class="app-card app-card-settings shadow-sm p-4">
 
-            <div class="app-card-body">
-                
-                <form action="" method="post" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label class="form-label">Image</label>
+                <div class="app-card-body">
+
+                    <form action="" method="post" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <img id="preview" class = "rounded"width="100" height="100">
+                            <label class="form-label">Image</label>
+                            <div class="mb-3">
+                                <img id="preview" class="rounded" width="100" height="100">
+                            </div>
+                            <button onclick="return triggerFile();" class="btn btn-success text-white">Choose file
+                                image</button>
+                            <input type="file" name="image" id="image" style="display:none;">
                         </div>
-                        <button onclick="return triggerFile();" class="btn btn-success text-white">Choose file image</button>
-                        <input type="file" name="image" id="image" style="display:none;">
-                    </div>
-                    <div class="mb-3 col-lg-6">
-                        <label class="form-label">Username</label>
-                        <input type="text" class="form-control" name="username" placeholder="admin" autocomplete="off" required>
-                    </div>
-                    <div class="mb-3 col-lg-6">
-                        <label class="form-label">Password</label>
-                        <input type="text" class="form-control" name="password" placeholder="1234567" autocomplete="off" required>
-                    </div>
-                    <hr class="mb-3 mt-4">
-                    <div class="mb-3 col-lg-6">
-                        <label class="form-label">Firstname</label>
-                        <input type="text" class="form-control" name="firstname" placeholder="ABCD" value="<?=
-                        (isset($_POST['firstname']) &&  !empty($_POST['firstname']) ? $_POST['firstname']:'' )?>"autocomplete="off" required>
-                    </div>
-                    <div class="mb-3 col-lg-6">
-                        <label class="form-label">Laststname</label>
-                        <input type="text" class="form-control" name="lastname" placeholder="EFGH" value="<?=
-                        (isset($_POST['lastname']) &&  !empty($_POST['lastname']) ? $_POST['lastname']:'' )?>" autocomplete="off"required>
-                    </div>
-                    <div class="mb-3 col-lg-6">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email" placeholder="Abcd@general.com" value="<?=
-                        (isset($_POST['email']) &&  !empty($_POST['email']) ? $_POST['email']:'' )?>" autocomplete="off" required>
-                    </div>
-                    <div class="mb-3 col-lg-6">
-                        <label class="form-label">Phone</label>
-                        <input type="text" class="form-control" name="phone" placeholder="0123456789" value="<?=
-                        (isset($_POST['phone']) &&  !empty($_POST['phone']) ? $_POST['phone']:'' )?>" autocomplete="off" required>
-                    </div>
-                    <button type="submit" class="btn app-btn-primary">Save Changes</button>
-                </form>
+                        <div class="mb-3 col-lg-6">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" name="username" placeholder="admin"
+                                autocomplete="off" required>
+                        </div>
+                        <div class="mb-3 col-lg-6">
+                            <label class="form-label">Password</label>
+                            <input type="text" class="form-control" name="password" placeholder="1234567"
+                                autocomplete="off" required>
+                        </div>
+                        <hr class="mb-3 mt-4">
+                        <div class="mb-3 col-lg-6">
+                            <label class="form-label">Firstname</label>
+                            <input type="text" class="form-control" name="firstname" placeholder="ABCD" value="<?=
+                        (isset($_POST['firstname']) &&  !empty($_POST['firstname']) ? $_POST['firstname']:'' )?>"
+                                autocomplete="off" required>
+                        </div>
+                        <div class="mb-3 col-lg-6">
+                            <label class="form-label">Laststname</label>
+                            <input type="text" class="form-control" name="lastname" placeholder="EFGH" value="<?=
+                        (isset($_POST['lastname']) &&  !empty($_POST['lastname']) ? $_POST['lastname']:'' )?>"
+                                autocomplete="off" required>
+                        </div>
+                        <div class="mb-3 col-lg-6">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" placeholder="Abcd@general.com" value="<?=
+                        (isset($_POST['email']) &&  !empty($_POST['email']) ? $_POST['email']:'' )?>"
+                                autocomplete="off" required>
+                        </div>
+                        <div class="mb-3 col-lg-6">
+                            <label class="form-label">Phone</label>
+                            <input type="text" class="form-control" name="phone" placeholder="0123456789" value="<?=
+                        (isset($_POST['phone']) &&  !empty($_POST['phone']) ? $_POST['phone']:'' )?>"
+                                autocomplete="off" required>
+                        </div>
+                        <button type="submit" class="btn app-btn-primary">Save Changes</button>
+                    </form>
+                </div>
+                <!--//app-card-body-->
+
             </div>
-            <!--//app-card-body-->
-
+            <!--//app-card-->
         </div>
-        <!--//app-card-->
     </div>
-</div>
-<!--//row-->
+    <!--//row-->
 
-<!-- Jqueryscript -->
+    <!-- Jqueryscript -->
 
-<script type="text/javascript">
-function triggerFile(){
-    //console.log('test')
-    $("#image").trigger("click");
-    return false;
-}
-
-function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function(e) {
-            $('#preview').attr('src', e.target.result);
-        }
-
-        reader.readAsDataURL(input.files[0]);
+    <script type="text/javascript">
+    function triggerFile() {
+        //console.log('test')
+        $("#image").trigger("click");
+        return false;
     }
-}
 
-$("#image").change(function() {
-    readURL(this);
-});
-</script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#preview').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#image").change(function() {
+        readURL(this);
+    });
+    </script>

@@ -26,26 +26,21 @@
                 <li class="nav-item menu-custom mx-2">
                     <div class="bg-white h-100" style="width:1px"></div>
                 </li>
-                <?php if(isset($_SESSION['username_id']) & !empty($_SESSION['username_id'])): ?>
+                <?php if(isset($_SESSION['username_login'])): ?>
                 <li class="nav-item menu-custom mx-2">
-                    
                     <div class="dropdown">
-                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                        <a class=" nav-link text-white dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <?=$_SESSION['username_login']?>
                         </a>
 
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="?page=profile">Account</a></li>
-                            <li><a class="dropdown-item" href="settings.html">Settings</a></li>
-                            <li>
-                                <hr class="dropdown-divider" />
-                            </li>
-                            <li><a class="dropdown-item" href="?page=logout">Log Out</a></li>
+                            <li><a class="dropdown-item " href="profile.php">Account</a></li>
+
                         </ul>
                     </div>
                 </li>
-                <?php else : ?>
+                <?php else: ?>
                 <li class="nav-item menu-custom mx-2">
                     <a class="nav-link text-white <?= $url[0] == 'register' ? 'active-menu-custom' : '' ?> "
                         href="register.php">Register</a>

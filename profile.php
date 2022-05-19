@@ -1,61 +1,50 @@
 <?php 
-    session_start();
-    $id = $_SESSION['username_id'];
+    include ('includes/head.php');
     include ('connection/server.php');
+    session_start();
+    $id = $_SESSION['id_login'];
+
     if(isset($_POST) && !empty($_POST)){
-        // echo '<pre>';
-        // print_r($_POST);
-        // echo '</pre>';
-        // exit ();
-
-        // if(isset($_POST['password']) && !empty($_POST['password']) && isset($_POST['repassword']) && 
-        //     !empty($_POST['repassword'])){
-        //     $password = $_POST['password'];
-        //     $repassword =  $_POST['repassword'];
-        //     if($password != $repassword){
-        //         echo '<script>';
-        //         echo 'alert("password and confirm password not match");';
-        //         echo 'window.location.href = "register.php"';
-        //         echo '</script>';
-        //         exit();
-        //     }
-        //     $password = md5($password);
-        // }else{
-        //     echo '<script>';
-        //     echo 'alert("Please write your password");';
-        //     echo 'window.location.href = "register.php"';
-        //     echo '</script>';
-        //     exit();
-        // }
-
         $firstname = $_POST['firstname'];
         $lastname = $_POST['lastname'];
         $phone = $_POST['phone'];
         $email = $_POST['email'];
-        $sql = sprintf("UPDATE tb_user SET firstname ='%s',lastname ='%s',email='%s',email='%s' WHERE id='%s'",
+        $sql = sprintf("UPDATE tb_user SET firstname ='%s',lastname ='%s',phone='%s',email='%s' WHERE id='%s'",
             $firstname,$lastname,$phone,$email,$id);
             // echo $sql;
             // exit();
         $query = mysqli_query($conn,$sql);
         if($query){
-            echo '<script>';
-                echo 'alert("Edited is successs");';
-                echo 'window.location.href = "profile.php"';
-                echo '</script>';
+                echo '<script>
+            setTimeout(function() {
+             swal({
+                 title: "Edited is success",
+                 type: "success",
+                 button: "OK",
+             }, function() {
+                window.location.href = "profile.php";
+             });
+                    }, 1000);
+                </script>';
                 exit();
         }else{
-            echo '<script>';
-            echo 'alert("Edited is not success");';
-            echo 'window.location.href = "profile.php"';
-            echo '</script>';
-            exit();
+            echo '<script>
+            setTimeout(function() {
+             swal({
+                 title: "Edited is not success",
+                 type: "error",
+                 button: "OK",
+             }, function() {
+                window.location.href = "profile.php";
+             });
+                    }, 1000);
+                </script>';
+                exit();
         }
         // echo $sql;
         // exit();
     }
-// print_r($_SESSION);
-// exit();
-    $id = $_SESSION['username_id'];
+    $id = $_SESSION['id_login'];
     $sql = sprintf("SELECT * FROM tb_user WHERE id = '%s'",$id);
     $query = mysqli_query($conn,$sql);
     $result = mysqli_fetch_assoc($query);
@@ -91,7 +80,7 @@
                 <div class="app-auth-body mx-auto">
                     <div class="auth-form-container text-start">
                         <div class="row">
-                            <h1 class="mb-5 text-center">Register</h1>
+                            <h1 class="mb-5 text-center">Profile</h1>
                             <div class="auth-form-container text-start">
                                 <!-- <div class="col-6 offset-3"> -->
                                 <form method="post">
@@ -143,9 +132,12 @@
                         <input type="text" class="form-control"name="repassword" autocomplete="off" required>
                     </div> -->
 
-                                    <button type="submit" class="btn app-btn-success w-100 theme-btn mx-auto text-center mt-1">Edit profile</button>
-                                    <button type=""onclick=window.history.back() value=back class="btn app-btn-danger w-100 theme-btn mx-auto text-center mt-1">Cancle</button>
-                                
+                                    <button type="submit"
+                                        class="btn app-btn-success w-100 theme-btn mx-auto text-center mt-1">Edit
+                                        profile</button>
+                                    <button type="" onclick=window.history.back() value=back
+                                        class="btn app-btn-danger w-100 theme-btn mx-auto text-center mt-1">Cancle</button>
+
                                 </form>
                                 <!-- </div> -->
                             </div>

@@ -10,22 +10,34 @@ if(isset($_POST) && !empty($_POST)){
     $password = sha1(md5($_POST['password']));
     $confirmpassword = sha1(md5($_POST['confirmpassword']));
     if ($password != $confirmpassword ){
-        $alert= '<script type="text/javascript">';
-        $alert .= 'alert("new password incorrect please again");';
-        $alert .= 'window.location.href = "?page=admin&function=resetpassword&id='.$id.'";';
-        $alert .= '</script>';
-        echo $alert;
+        echo '<script>
+                setTimeout(function() {
+                swal({
+                    title: "รหัสผ่านไหม่ผิด กรอกอีกครั้ง",
+                    type: "error",
+                    button: "OK",
+                }, function() {
+                    window.location.href = "?page=admin&function=resetpassword&id='.$id.'";
+                });
+                        }, 1000);
+            </script>';
         exit();
     }else{
         $sql = "UPDATE tb_admin SET password='$password' WHERE id = '$id'";
         if (mysqli_query($conn,$sql)) {
             //echo "Updated successfully";
-            $alert= '<script type="text/javascript">';
-            $alert .= 'alert("Reset password Username : '.$result['username'].' successfully");';
-            $alert .= 'window.location.href = "?page=admin";';
-            $alert .= '</script>';
-            echo $alert;
-            exit();
+            echo '<script>
+                setTimeout(function() {
+                swal({
+                    title: "เปลี่ยนรหัสผ่าน ผู้ใช้ : '.$result['username'].' เสร็จเรียบร้อย",
+                    type: "success",
+                    button: "OK",
+                }, function() {
+                    window.location.href = "?page=admin";
+                });
+                        }, 1000);
+            </script>';
+        exit();
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
